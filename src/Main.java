@@ -1,0 +1,90 @@
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main {
+
+
+        static class Node{
+            int data;
+            top_view_binary_tree.Node left;
+            top_view_binary_tree.Node right;
+            public Node(int data){
+                this.data=data;
+                this.left=null;
+                this.right=null;
+            }
+
+        }
+        static class info{
+            top_view_binary_tree.Node node;
+            int hzd;
+            public info(top_view_binary_tree.Node node, int hzd){
+                this.node=node;
+                this.hzd=hzd;
+            }
+        }
+
+        // public static Node root=new Node();
+        public static void top_view(top_view_binary_tree.Node root) {
+
+
+
+
+            Queue<top_view_binary_tree.info> q=new LinkedList<>();
+            HashMap<Integer, top_view_binary_tree.Node> map=new HashMap<>();
+            int min=0,max=0;
+            q.add(new top_view_binary_tree.info(root,0));
+            q.add(null );
+            while(!q.isEmpty()){
+                top_view_binary_tree.info curr=q.remove();
+                if(curr==null){
+                    if(q.isEmpty()){
+                        break;
+                    }
+                    else{
+                        q.add(null);
+                    }
+                }
+                else{
+                    if(!map.containsKey(curr.hzd)){
+                        map.put(curr.hzd,curr.node);
+                    }
+                    if(curr.node.left != null){
+                        q.add(new top_view_binary_tree.info(curr.node.left,curr.hzd-1));
+                        min=Math.min(min, curr.hzd-1);
+                    }
+                    if(curr.node.right!=null){
+                        q.add(new top_view_binary_tree.info(curr.node.right,curr.hzd+1));
+                        max=Math.max(max,curr.hzd+1);
+                    }
+                }
+
+            }
+            for(int i=min;i<=max;i++){
+                System.out.print(map.get(i).data+" ");
+
+            }
+
+
+        }
+
+
+
+
+        public static void main(String args[]){
+
+            top_view_binary_tree.Node root=new top_view_binary_tree.Node(1);
+            root.left=new top_view_binary_tree.Node(2);
+            root.right=new top_view_binary_tree.Node(3);
+            root.left.left=new top_view_binary_tree.Node(4);
+            root.right.left=new top_view_binary_tree.Node(6);
+            root.left.right=new top_view_binary_tree.Node(5);
+            root.right.right=new top_view_binary_tree.Node(7);
+            top_view(root);
+
+        }
+
+
+
+}
